@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:weather_app/models/weathermodel/weathermodel.dart';
-import 'package:weather_app/service/Weather_Service.dart';
+import '../models/weathermodel/weathermodel.dart';
+import '../service/Weather_Service.dart';
 
 class SearchViewScreen extends StatelessWidget {
   const SearchViewScreen({Key? key}) : super(key: key);
@@ -24,6 +24,7 @@ class SearchViewScreen extends StatelessWidget {
                 Weathermodel model = await WeatherService(dio: Dio())
                     .getWeather(cityName: value);
                 log(model.location!.name!);
+                Navigator.pop(context);
               },
               decoration: const InputDecoration(
                 contentPadding:
