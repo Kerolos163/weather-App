@@ -1,25 +1,30 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:weather_app/models/weathermodel/weathermodel.dart';
 
 class WeatherInfoBody extends StatelessWidget {
-  const WeatherInfoBody({Key? key}) : super(key: key);
+  const WeatherInfoBody({Key? key, required this.model}) : super(key: key);
 
+  final Weathermodel model;
   @override
   Widget build(BuildContext context) {
+    log(model.location!.name!);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
-            'Alexandria',
-            style: TextStyle(
+          Text(
+            model.location!.name!,
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 32,
             ),
           ),
-          const Text(
-            'updated at 23:46',
-            style: TextStyle(
+          Text(
+            'updated at ${stringToDate(stringValue: model.current!.lastUpdated!).hour}:${stringToDate(stringValue: model.current!.lastUpdated!).minute}',
+            style: const TextStyle(
               fontSize: 24,
             ),
           ),
@@ -32,24 +37,24 @@ class WeatherInfoBody extends StatelessWidget {
               Image.asset(
                 'assets/images/cloudy.png',
               ),
-              const Text(
-                '17',
-                style: TextStyle(
+              Text(
+                model.forecast!.forecastday![0].day!.avgtempC.toString(),
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 32,
                 ),
               ),
-              const Column(
+              Column(
                 children: [
                   Text(
-                    'Maxtemp: 24',
-                    style: TextStyle(
+                    'Maxtemp: ${model.forecast!.forecastday![0].day!.maxtempC!.round()}',
+                    style: const TextStyle(
                       fontSize: 16,
                     ),
                   ),
                   Text(
-                    'Mintemp: 16',
-                    style: TextStyle(
+                    'Mintemp: ${model.forecast!.forecastday![0].day!.mintempC!.round()}',
+                    style: const TextStyle(
                       fontSize: 16,
                     ),
                   ),
@@ -60,9 +65,9 @@ class WeatherInfoBody extends StatelessWidget {
           const SizedBox(
             height: 32,
           ),
-          const Text(
-            'Ligh Rain',
-            style: TextStyle(
+          Text(
+            "${model.forecast!.forecastday![0].day!.condition!.text}",
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 32,
             ),
@@ -70,5 +75,9 @@ class WeatherInfoBody extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  DateTime stringToDate({required String stringValue}) {
+    return DateTime.parse(stringValue);
   }
 }

@@ -1,9 +1,7 @@
-import 'dart:developer';
-
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import '../models/weathermodel/weathermodel.dart';
-import '../service/Weather_Service.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:weather_app/Cubits/Get_WeatherCubit/cubit.dart';
+import 'package:weather_app/Cubits/Get_WeatherCubit/state.dart';
 
 class SearchViewScreen extends StatelessWidget {
   const SearchViewScreen({Key? key}) : super(key: key);
@@ -19,19 +17,24 @@ class SearchViewScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            TextField(
-              onSubmitted: (value) async {
-                Weathermodel model = await WeatherService(dio: Dio())
-                    .getWeather(cityName: value);
-                log(model.location!.name!);
-                Navigator.pop(context);
+            BlocListener<GetWeatherCubit, GetWeatherState>(
+              listener: (context, state) {
+                // TODO: implement listener
+                if (state is GetWeatherSuccessState) {
+                  Navigator.pop(context);
+                }
               },
-              decoration: const InputDecoration(
-                contentPadding:
-                    EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-                label: Text("Search"),
-                hintText: "Enter City Name..",
-                border: OutlineInputBorder(),
+              child: TextField(
+                onSubmitted: (value) async {
+                  GetWeatherCubit.get(context).getWeather(cityName: value);
+                },
+                decoration: const InputDecoration(
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+                  label: Text("Search"),
+                  hintText: "Enter City Name..",
+                  border: OutlineInputBorder(),
+                ),
               ),
             ),
           ],
