@@ -39,32 +39,32 @@ class WeatherApp extends StatelessWidget {
       ),
     );
   }
+}
 
-  MaterialColor getThemeColor(String? condition) {
-    if (condition == null) {
+MaterialColor getThemeColor(String? condition) {
+  if (condition == null) {
+    return Colors.blue;
+  }
+  switch (condition) {
+    case "Sunny":
+      return Colors.amber;
+    case "Clear":
+      return Colors.yellow;
+    case "Partly cloudy":
+      return Colors.lightBlue;
+    case "Cloudy":
+      return Colors.grey;
+    case "Overcast":
+      return Colors.blueGrey;
+    case "Mist":
+      return Colors.indigo;
+    case "Patchy rain possible":
+      return Colors.lightGreen;
+    case "Patchy snow possible":
+      return Colors.blueGrey;
+    // Add more cases for other conditions as needed
+
+    default:
       return Colors.blue;
-    }
-    switch (condition) {
-      case "Sunny":
-        return Colors.amber;
-      case "Clear":
-        return Colors.yellow;
-      case "Partly cloudy":
-        return Colors.lightBlue;
-      case "Cloudy":
-        return Colors.grey;
-      case "Overcast":
-        return Colors.blueGrey;
-      case "Mist":
-        return Colors.indigo;
-      case "Patchy rain possible":
-        return Colors.lightGreen;
-      case "Patchy snow possible":
-        return Colors.blueGrey;
-      // Add more cases for other conditions as needed
-
-      default:
-        return Colors.blue;
-    }
   }
 }
