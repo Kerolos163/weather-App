@@ -12,15 +12,19 @@ class WeatherInfoBody extends StatelessWidget {
   Widget build(BuildContext context) {
     log(model.location!.name!);
     return Container(
-      decoration:  BoxDecoration(
+      decoration: BoxDecoration(
           gradient: LinearGradient(colors: [
         getThemeColor(model.forecast?.forecastday?[0].day?.condition?.text),
-        getThemeColor(model.forecast?.forecastday?[0].day?.condition?.text)[400]!,
-        getThemeColor(model.forecast?.forecastday?[0].day?.condition?.text)[300]!,
-        getThemeColor(model.forecast?.forecastday?[0].day?.condition?.text)[200]!,
-        getThemeColor(model.forecast?.forecastday?[0].day?.condition?.text)[100]!,
-        getThemeColor(model.forecast?.forecastday?[0].day?.condition?.text)[50]!,
-
+        getThemeColor(
+            model.forecast?.forecastday?[0].day?.condition?.text)[400]!,
+        getThemeColor(
+            model.forecast?.forecastday?[0].day?.condition?.text)[300]!,
+        getThemeColor(
+            model.forecast?.forecastday?[0].day?.condition?.text)[200]!,
+        getThemeColor(
+            model.forecast?.forecastday?[0].day?.condition?.text)[100]!,
+        getThemeColor(
+            model.forecast?.forecastday?[0].day?.condition?.text)[50]!,
       ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -47,7 +51,7 @@ class WeatherInfoBody extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Image.asset(
-                  'assets/images/cloudy.png',
+                  getImage(model.forecast!.forecastday![0].day!.condition!.text!),
                 ),
                 Text(
                   model.forecast!.forecastday![0].day!.avgtempC.toString(),
@@ -92,5 +96,72 @@ class WeatherInfoBody extends StatelessWidget {
 
   DateTime stringToDate({required String stringValue}) {
     return DateTime.parse(stringValue);
+  }
+
+  String getImage(String condition) {
+    switch (condition) {
+      case "Sunny":
+      case "Clear":
+        return "assets/images/clear.png";
+
+      case "Cloudy":
+      case "Partly cloudy":
+      case "Overcast":
+      case "Mist":
+      case "Fog":
+      case "Patchy light drizzle":
+        return 'assets/images/cloudy.png';
+
+      case "Patchy rain possible":
+      case "Light drizzle":
+      case "Patchy light rain":
+      case "Light rain":
+      case "Moderate rain at times":
+      case "Moderate rain":
+      case "Heavy rain at times":
+      case "Heavy rain":
+      case "Light rain shower":
+      case "Moderate or heavy rain shower":
+      case "Torrential rain shower":
+      case "Light sleet showers":
+      case "Moderate or heavy sleet showers":
+        return "assets/images/rainy.png";
+
+      case "Patchy snow possible":
+      case "Patchy sleet possible":
+      case "Patchy freezing drizzle possible":
+      case "Blowing snow":
+      case "Blizzard":
+      case "Freezing fog":
+      case "Freezing drizzle":
+      case "Heavy freezing drizzle":
+      case "Light freezing rain":
+      case "Moderate or heavy freezing rain":
+      case "Light sleet":
+      case "Moderate or heavy sleet":
+      case "Patchy light snow":
+      case "Light snow":
+      case "Patchy moderate snow":
+      case "Moderate snow":
+      case "Patchy heavy snow":
+      case "Heavy snow":
+      case "Ice pellets":
+      case "Light snow showers":
+      case "Moderate or heavy snow showers":
+      case "Light showers of ice pellets":
+      case "Moderate or heavy showers of ice pellets":
+        return "assets/images/snow.png";
+
+      case "Thundery outbreaks possible":
+      case "Patchy light rain with thunder":
+      case "Moderate or heavy rain with thunder":
+      case "Patchy light snow with thunder":
+      case "Moderate or heavy snow with thunder":
+        return "assets/images/thunderstorm.png";
+      // Add more cases for other conditions as needed
+
+      default:
+        return "assets/images/clear.png";
+    }
   }
 }
